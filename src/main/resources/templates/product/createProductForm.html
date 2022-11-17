@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+    <div th:replace="navigation :: navbar"></div>
+
+    <form action="/product/createProduct" method="post">
+        <label for="productName"> name: </label><br>
+        <input type="text" id="productName" name="productName" required><br><br>
+        <label for="productPrice"> price: </label><br>
+        <input type="text" id="productPrice" name="productPrice" required><br><br>
+
+        <label for="producerId"> producer id: </label><br>
+        <select input class="form-select" id="producerId" name="producerId" required aria-label="select example">
+            <option value="">producer id</option>
+            <tr th:each="producer : ${producers}">
+                <td><span th:text="${producer.id}"> Id </span></td>
+                <option th:text="${producer.id}">producerId</option>
+            </tr>><br>
+        </select><br><br>
+
+        <button type="submit">Create</button>
+    </form>
+    </body>
+</html>

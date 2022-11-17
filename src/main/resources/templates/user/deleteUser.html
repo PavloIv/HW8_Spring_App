@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+    <div th:replace="navigation :: navbar"></div>
+
+    <form action="/user/deleteUser" method="post">
+        <label for="id"> id: </label><br>
+        <select input class="form-select" id="id" name="id" required aria-label="select example">
+            <option value="">id</option>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.id}"> Id </span></td>
+                <option th:text="${user.id}">Id</option>
+            </tr>><br>
+        </select><br><br>
+
+        <button type="submit">Delete</button>
+    </form>
+
+    <h2>User delete</h2>
+
+    </body>
+</html>

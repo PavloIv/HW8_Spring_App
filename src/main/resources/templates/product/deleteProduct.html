@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+    <div th:replace="navigation :: navbar"></div>
+
+        <form action="/product/deleteProduct" method="post">
+
+            <label for="productId"> product id: </label><br>
+            <select input class="form-select" id="productId" name="productId" required aria-label="select example">
+                <option value="">product id</option>
+                <tr th:each="product : ${products}">
+                    <td><span th:text="${product.id}"> Id </span></td>
+                    <option th:text="${product.id}">productId</option>
+                </tr>><br>
+            </select><br><br>
+
+            <button type="submit">Delete</button>
+        </form>
+
+    <h2>Producer delete</h2>
+
+    </body>
+</html>

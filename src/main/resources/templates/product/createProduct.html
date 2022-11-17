@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+    <div th:replace="navigation :: navbar"></div>
+
+    <form action="/producer/createProducer" method="post">
+        <label for="email"> email: </label><br>
+        <input type="text" id="email" name="email" required><br><br>
+        <label for="password"> password: </label><br>
+        <input type="text" id="password" name="password" required><br><br>
+        <label for="firstName"> first name: </label><br>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName"> last name: </label><br>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="role"> role: </label><br>
+        <select input class="form-select" id="role" name="role" required aria-label="select example">
+            <option value="">role</option>
+            <option th:text="${role}">Admin</option>
+            <option th:text="${role}">User</option>
+            </tr>><br>
+        </select><br><br>
+
+        <button type="submit">Create</button>
+    </form>
+
+    <h2>Producer add</h2>
+
+    </body>
+</html>
