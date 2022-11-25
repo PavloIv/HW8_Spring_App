@@ -38,13 +38,20 @@ public class ProducerController {
     }
 
     @GetMapping("/updateProducerForm")
-    public ModelAndView updateForm() {
+    public ModelAndView updateForm(Model model) {
+
+        model.addAttribute("producers",producerRepository.findAll());
+
         return new ModelAndView("producer/updateProducerForm");
     }
 
     @PostMapping("/updateProducer")
-    public ModelAndView updateProducer(@RequestParam(name = "producerId") Long producerId,
+    public ModelAndView updateProducer(Model model,
+                                       @RequestParam(name = "producerId") Long producerId,
                                        @RequestParam(name = "producerName") String producerName) {
+
+        model.addAttribute("producers",producerRepository.findAll());
+
         Producer producer = new Producer();
         producer.setId(producerId);
         producer.setName(producerName);
@@ -55,7 +62,10 @@ public class ProducerController {
     }
 
     @GetMapping("/deleteProducerForm")
-    public ModelAndView deleteForm() {
+    public ModelAndView deleteForm(Model model) {
+
+        model.addAttribute("producers",producerRepository.findAll());
+
         return new ModelAndView("producer/deleteProducerForm");
     }
 

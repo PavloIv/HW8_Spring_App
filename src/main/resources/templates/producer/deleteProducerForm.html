@@ -10,10 +10,16 @@
     <div th:replace="navigation :: navbar"></div>
 
         <form action="/producer/deleteProducer" method="post">
-            <label for="producerId"> id: </label><br>
-            <input type="text" id="producerId" name="producerId" required><br><br>
+            <label for="producerId"> product id: </label><br>
+            <select input class="form-select" id="producerId" name="producerId" required aria-label="select example">
+                <option value="">producer id</option>
+                <tr th:each="producer: ${producers}">
+                    <td><span th:text="${producer.id}"> Id </span></td>
+                    <option th:text="${producer.id}">producerId</option>
+                </tr>><br>
+            </select><br><br>
 
-            <button type="submit">Create</button>
+            <button type="submit">Delete</button>
         </form>
     </body>
 </html>

@@ -9,6 +9,10 @@
 
     <div th:replace="navigation :: navbar"></div>
 
+    <div th:if="${message}">
+        <h2>User with this name already exist!!!
+            Try again.</h2>
+    </div>
         <form action="/user/createUser" method="post">
             <label for="email"> email: </label><br>
             <input type="text" id="email" name="email" required><br><br>
@@ -18,14 +22,6 @@
             <input type="text" id="firstName" name="firstName" required><br><br>
             <label for="lastName"> last name: </label><br>
             <input type="text" id="lastName" name="lastName" required><br><br>
-
-            <label for="role"> role: </label><br>
-            <select input class="form-select" id="role" name="role" required aria-label="select example">
-                <option value="">role</option>
-                <option value="admin">admin</option>
-                <option value="user">user</option>
-                </tr>><br>
-            </select><br><br>
 
             <button type="submit">Create</button>
         </form>

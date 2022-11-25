@@ -1,5 +1,6 @@
 package com.ip.hw8.controller;
 
+import com.ip.hw8.entity.Role;
 import com.ip.hw8.entity.User;
 import com.ip.hw8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
     private final UserRepository userRepository;
-
     @GetMapping("/allUser")
     public ModelAndView allUser(Model model) {
 
@@ -37,15 +40,20 @@ public class UserController {
                                    @RequestParam(name = "password") String password,
                                    @RequestParam(name = "firstName") String firstName,
                                    @RequestParam(name = "lastName") String lastName,
-                                   @RequestParam(name = "role") String role) {
+                                   Map<String,Object> model) {
+        User userAudit = userRepository.findByEmailUser(email);
+        if (userAudit != null) {
+            model.put("message","User with this name already exist!!!\nTry again.");
+            return new ModelAndView("user/createUserForm");
+        }
 
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
+        user.setActive(true);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setRole(role);
-
+        user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         userRepository.save(user);
 
         return new ModelAndView("user/createUser");
@@ -64,18 +72,18 @@ public class UserController {
                                    @RequestParam(name = "email") String email,
                                    @RequestParam(name = "password") String password,
                                    @RequestParam(name = "firstName") String firstName,
-                                   @RequestParam(name = "lastName") String lastName,
-                                   @RequestParam(name = "role") String role) {
+                                   @RequestParam(name = "lastName") String lastName ) {
 
         model.addAttribute("user", userRepository.findAll());
 
         User user = new User();
         user.setId(id);
         user.setEmail(email);
+        user.setActive(true);
         user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setRole(role);
+        user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
 
         userRepository.save(user);
 

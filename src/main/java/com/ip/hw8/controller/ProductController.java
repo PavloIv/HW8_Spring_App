@@ -29,13 +29,11 @@ public class ProductController {
         model.addAttribute("products", productRepository.findAll());
         return new ModelAndView("product/allProduct");
     }
-
     @GetMapping("/createProductForm")
     public ModelAndView createForm(Model model){
         model.addAttribute("producers",producerRepository.findAll());
         return new ModelAndView("product/createProductForm");
     }
-
     @PostMapping("/createProduct")
     public ModelAndView createProduct(Model model,
                                       @RequestParam(name = "productName")String productName,
