@@ -4,7 +4,6 @@ import com.ip.hw8.entity.Role;
 import com.ip.hw8.entity.User;
 import com.ip.hw8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class UserController {
     private final UserRepository userRepository;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/allUser")
     public ModelAndView allUser(Model model) {

@@ -4,6 +4,7 @@ import com.ip.hw8.entity.Role;
 import com.ip.hw8.entity.User;
 import com.ip.hw8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MainController {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/main")
     public ModelAndView main(){
@@ -43,7 +45,7 @@ public class MainController {
         }
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setActive(true);
         user.setFirstName(firstName);
         user.setLastName(lastName);
