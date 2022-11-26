@@ -4,6 +4,8 @@ import com.ip.hw8.entity.Role;
 import com.ip.hw8.entity.User;
 import com.ip.hw8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +21,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-
     private final UserRepository userRepository;
+
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @GetMapping("/allUser")
     public ModelAndView allUser(Model model) {
 
@@ -49,7 +53,7 @@ public class UserController {
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setActive(true);
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -80,7 +84,7 @@ public class UserController {
         user.setId(id);
         user.setEmail(email);
         user.setActive(true);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));

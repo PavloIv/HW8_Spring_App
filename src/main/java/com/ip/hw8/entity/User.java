@@ -1,5 +1,6 @@
 package com.ip.hw8.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Column(name = "active")
     private boolean active;
