@@ -1,9 +1,6 @@
 package com.ip.hw8.entity;
 
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Embeddable;

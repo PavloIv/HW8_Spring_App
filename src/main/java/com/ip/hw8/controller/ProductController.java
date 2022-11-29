@@ -1,9 +1,7 @@
 package com.ip.hw8.controller;
 
-import com.ip.hw8.entity.Producer;
-import com.ip.hw8.entity.Product;
-import com.ip.hw8.repository.ProducerRepository;
-import com.ip.hw8.repository.ProductRepository;
+import com.ip.hw8.service.ProducerService;
+import com.ip.hw8.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,89 +17,72 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
-
-    private final ProductRepository productRepository;
-    private final ProducerRepository producerRepository;
-
+    private final ProducerService producerService;
+    private final ProductService productService;
 
     @GetMapping("/allProduct")
     public ModelAndView allProduct(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("products", productService.findAll());
         return new ModelAndView("product/allProduct");
     }
+
     @GetMapping("/createProductForm")
-    public ModelAndView createForm(Model model){
-        model.addAttribute("producers",producerRepository.findAll());
+    public ModelAndView createForm(Model model) {
+        model.addAttribute("producers", producerService.findAll());
         return new ModelAndView("product/createProductForm");
     }
+
     @PostMapping("/createProduct")
     public ModelAndView createProduct(Model model,
-                                      @RequestParam(name = "productName")String productName,
-                                      @RequestParam(name = "productPrice")BigDecimal productPrice,
-                                      @RequestParam(name = "producerId")Long producerId){
-        Producer producer;
-        producer = producerRepository.getReferenceById(producerId);
+                                      @RequestParam(name = "productName") String productName,
+                                      @RequestParam(name = "productPrice") BigDecimal productPrice,
+                                      @RequestParam(name = "producerId") Long producerId) {
 
-        Product product = new Product();
-        product.setName(productName);
-        product.setPrice(productPrice);
-        product.setProducer(producer);
+        productService.createProduct(productName, productPrice, producerId);
 
-        productRepository.save(product);
-
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
         return new ModelAndView("product/createProduct");
     }
 
     @GetMapping("/updateProductForm")
-    public ModelAndView updateForm(Model model){
+    public ModelAndView updateForm(Model model) {
 
-        model.addAttribute("products", productRepository.findAll());
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
         return new ModelAndView("product/updateProductForm");
     }
 
     @PostMapping("/updateProduct")
     public ModelAndView updateProduct(Model model,
-                                      @RequestParam(name = "productId")Long productId,
-                                      @RequestParam(name = "productName")String productName,
-                                      @RequestParam(name = "productPrice")BigDecimal productPrice,
-                                      @RequestParam(name = "producerId")Long producerId){
+                                      @RequestParam(name = "productId") Long productId,
+                                      @RequestParam(name = "productName") String productName,
+                                      @RequestParam(name = "productPrice") BigDecimal productPrice,
+                                      @RequestParam(name = "producerId") Long producerId) {
+        productService.updateProduct(productId, productName, productPrice, producerId);
 
-
-        Producer producer;
-        producer = producerRepository.getReferenceById(producerId);
-
-        Product product = new Product();
-        product.setId(productId);
-        product.setName(productName);
-        product.setPrice(productPrice);
-        product.setProducer(producer);
-
-        productRepository.save(product);
-
-        model.addAttribute("products", productRepository.findAll());
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
         return new ModelAndView("product/updateProduct");
     }
 
     @GetMapping("/deleteProductForm")
-    public ModelAndView deleteForm(Model model){
+    public ModelAndView deleteForm(Model model) {
 
-        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("products", productService.findAll());
 
         return new ModelAndView("product/deleteProductForm");
     }
 
     @PostMapping("/deleteProduct")
     public ModelAndView deleteProduct(Model model,
-                                      @RequestParam(name = "productId")Long productId){
+                                      @RequestParam(name = "productId") Long productId) {
 
-        model.addAttribute("products", productRepository.findAll());
-        productRepository.deleteById(productId);
+        model.addAttribute("products", productService.findAll());
+
+        productService.deleteProduct(productId);
 
         return new ModelAndView("product/deleteProduct");
     }

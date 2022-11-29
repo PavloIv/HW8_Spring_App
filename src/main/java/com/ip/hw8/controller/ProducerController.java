@@ -1,7 +1,6 @@
 package com.ip.hw8.controller;
 
-import com.ip.hw8.entity.Producer;
-import com.ip.hw8.repository.ProducerRepository;
+import com.ip.hw8.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 @RequestMapping("/producer")
 public class ProducerController {
-
-    private final ProducerRepository producerRepository;
+    private final ProducerService producerService;
 
     @GetMapping("/allProducer")
     public ModelAndView allProducer(Model model) {
-        model.addAttribute("producers", producerRepository.findAll());
+        model.addAttribute("producers", producerService.findAll());
         return new ModelAndView("producer/allProducer");
     }
 
@@ -31,16 +29,16 @@ public class ProducerController {
 
     @PostMapping("/createProducer")
     public ModelAndView createProducer(@RequestParam(name = "producerName") String producerName) {
-        Producer producer = new Producer();
-        producer.setName(producerName);
-        producerRepository.save(producer);
+
+        producerService.createProducer(producerName);
+
         return new ModelAndView("producer/createProducer");
     }
 
     @GetMapping("/updateProducerForm")
     public ModelAndView updateForm(Model model) {
 
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
         return new ModelAndView("producer/updateProducerForm");
     }
@@ -50,13 +48,9 @@ public class ProducerController {
                                        @RequestParam(name = "producerId") Long producerId,
                                        @RequestParam(name = "producerName") String producerName) {
 
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
-        Producer producer = new Producer();
-        producer.setId(producerId);
-        producer.setName(producerName);
-
-        producerRepository.save(producer);
+        producerService.updateProducer(producerId,producerName);
 
         return new ModelAndView("producer/updateProducer");
     }
@@ -64,14 +58,14 @@ public class ProducerController {
     @GetMapping("/deleteProducerForm")
     public ModelAndView deleteForm(Model model) {
 
-        model.addAttribute("producers",producerRepository.findAll());
+        model.addAttribute("producers", producerService.findAll());
 
         return new ModelAndView("producer/deleteProducerForm");
     }
 
     @PostMapping("/deleteProducer")
     public ModelAndView deleteProducer(@RequestParam(name = "producerId") Long producerId) {
-        producerRepository.deleteById(producerId);
+        producerService.deleteProducer(producerId);
         return new ModelAndView("producer/deleteProducer");
     }
 }
