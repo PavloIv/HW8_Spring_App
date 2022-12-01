@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email = ?1")
     User findByEmailFetchRole(String email);
-    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    User findByEmailUser(String email);
+    User findByEmail(String email);
 }

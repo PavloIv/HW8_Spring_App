@@ -5,12 +5,10 @@ import com.ip.hw8.repository.UserRepository;
 import com.ip.hw8.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,18 +29,15 @@ public class MainController {
     }
 
     @PostMapping("/registrationNewUser")
-    public String  createUser(@RequestParam(name = "email") String email,
-                                   @RequestParam(name = "password") String password,
-                                   @RequestParam(name = "firstName") String firstName,
-                                   @RequestParam(name = "lastName") String lastName,
-                              Map<String,Object> model) {
-        User userAudit = userRepository.findByEmailUser(email);
+    public String  createUser(User user,
+                              Model model) {
+        User userAudit = userRepository.findByEmail(user.getEmail());
         if (userAudit != null) {
-            model.put("message","User with this name already exist!!!\n" +
+            model.addAttribute("message","User with this name already exist!!!\n" +
                     "Try again.");
             return "registration";
         }else {
-        userService.createUser(email,password,firstName,lastName);
+        userService.createUser(user);
         }
         return "redirect:/login";
     }

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,25 +25,31 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmailFetchRole(username);
     }
 
-    public void createUser(String email, String password, String firstName, String lastName){
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    public void createUser(User user){
+        user.setEmail(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         userRepository.save(user);
     }
 
-    public void updateUser(Long id,String email,String password,String firstName,String lastName){
-        User user = new User();
-        user.setId(id);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+    public void updateUser(User user){
+        user.setId(user.getId());
+        user.setEmail(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         userRepository.save(user);
     }
@@ -50,6 +57,5 @@ public class UserService implements UserDetailsService {
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
-
 
 }
