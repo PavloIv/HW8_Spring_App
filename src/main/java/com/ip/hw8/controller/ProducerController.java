@@ -1,5 +1,6 @@
 package com.ip.hw8.controller;
 
+import com.ip.hw8.entity.Producer;
 import com.ip.hw8.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,50 +23,63 @@ public class ProducerController {
         return new ModelAndView("producer/allProducer");
     }
 
-    @GetMapping("/createProducerForm")
-    public ModelAndView createForm() {
-        return new ModelAndView("producer/createProducerForm");
+    @GetMapping("/createProducer")
+    public String createForm() {
+        return "producer/createProducer";
     }
 
     @PostMapping("/createProducer")
-    public ModelAndView createProducer(@RequestParam(name = "producerName") String producerName) {
+    public String createProducer(Model model,
+            @RequestParam(name = "producerName") String producerName) {
+        Producer producerAudit = producerService.findByName(producerName);
+        if (producerAudit != null){
+            model.addAttribute("producerDuplicate", "Producer with this name already exist!!!\nTry again.");
+            return "producer/createProducer";
+        }
 
         producerService.createProducer(producerName);
-
-        return new ModelAndView("producer/createProducer");
+        model.addAttribute("producerCreate", "Producer create successful");
+        return "producer/createProducer";
     }
 
-    @GetMapping("/updateProducerForm")
-    public ModelAndView updateForm(Model model) {
+    @GetMapping("/updateProducer")
+    public String updateForm(Model model) {
 
         model.addAttribute("producers", producerService.findAll());
 
-        return new ModelAndView("producer/updateProducerForm");
+        return "producer/updateProducer";
     }
 
     @PostMapping("/updateProducer")
-    public ModelAndView updateProducer(Model model,
+    public String updateProducer(Model model,
                                        @RequestParam(name = "producerId") Long producerId,
                                        @RequestParam(name = "producerName") String producerName) {
 
         model.addAttribute("producers", producerService.findAll());
 
-        producerService.updateProducer(producerId,producerName);
+        Producer producerAudit = producerService.findByName(producerName);
+        if (producerAudit != null){
+            model.addAttribute("producerDuplicate", "Producer with this name already exist!!!\nTry again.");
+            return "producer/updateProducer";
+        }
 
-        return new ModelAndView("producer/updateProducer");
+        producerService.updateProducer(producerId,producerName);
+        model.addAttribute("producerUpdate","Producer update successful");
+        return "producer/updateProducer";
     }
 
-    @GetMapping("/deleteProducerForm")
-    public ModelAndView deleteForm(Model model) {
+    @GetMapping("/deleteProducer")
+    public String deleteForm(Model model) {
 
         model.addAttribute("producers", producerService.findAll());
 
-        return new ModelAndView("producer/deleteProducerForm");
+        return "producer/deleteProducer";
     }
 
     @PostMapping("/deleteProducer")
-    public ModelAndView deleteProducer(@RequestParam(name = "producerId") Long producerId) {
+    public String deleteProducer(Model model,
+                                 @RequestParam(name = "producerId") Long producerId) {
         producerService.deleteProducer(producerId);
-        return new ModelAndView("producer/deleteProducer");
+        return "redirect:deleteProducer";
     }
 }

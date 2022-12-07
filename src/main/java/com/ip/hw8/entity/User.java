@@ -29,17 +29,17 @@ public class User implements UserDetails {
     @Column(name = "email")
     @Email(message = "email is not correct")
     @NotBlank(message = "email can not be empty")
-    @Length(min = 5)
     private String email;
 
     @Column(name = "password")
     @JsonIgnore
+    @Length(min = 6,message = "password must be 6 or more symbols")
     @NotBlank(message = "password can not be empty")
     private String password;
 
-//    @Transient
-//    @NotBlank(message = "password confirmation can not be empty")
-//    private String password2;
+    @Transient
+    @NotBlank(message = "password confirmation can not be empty")
+    private String password2;
 
     @Column(name = "active")
     private boolean active;

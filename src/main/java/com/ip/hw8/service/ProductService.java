@@ -19,6 +19,9 @@ public class ProductService {
     public List<Product> findAll(){
         return productRepository.findAll();
     }
+    public Product findByName(String productName){
+        return productRepository.findByName(productName);
+    }
 
     public void createProduct(String productName, BigDecimal productPrice, Long producerId){
         Producer producer;

@@ -21,7 +21,13 @@
         </select><br><br>
 
         <label for="productName"> name: </label><br>
-        <input type="text" id="productName" name="productName" required><br><br>
+        <input type="text" id="productName" name="productName" required><br>
+        <div th:if="${productDuplicate}">
+            <h3>
+                <div style="color:red" th:text="${productDuplicate}"></div>
+            </h3>
+        </div>
+
         <label for="productPrice"> price: </label><br>
         <input type="text" id="productPrice" name="productPrice" required><br><br>
 
@@ -37,7 +43,11 @@
         <button type="submit">Update</button>
     </form>
 
-    <h2>Product update</h2>
+    <div th:if="${productUpdate}">
+        <h3>
+            <div type="submit" th:text="${productUpdate}"></div>
+        </h3>
+    </div>
 
     </body>
 </html>

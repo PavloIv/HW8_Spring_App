@@ -34,24 +34,17 @@ public class UserService implements UserDetailsService {
     }
 
     public void createUser(User user){
-        user.setEmail(user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         userRepository.save(user);
     }
 
     public void updateUser(User user){
-        user.setId(user.getId());
-        user.setEmail(user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     public void deleteUser(Long id){

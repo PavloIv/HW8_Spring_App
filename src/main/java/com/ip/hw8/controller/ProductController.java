@@ -1,5 +1,6 @@
 package com.ip.hw8.controller;
 
+import com.ip.hw8.entity.Product;
 import com.ip.hw8.service.ProducerService;
 import com.ip.hw8.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,64 +27,78 @@ public class ProductController {
         return new ModelAndView("product/allProduct");
     }
 
-    @GetMapping("/createProductForm")
-    public ModelAndView createForm(Model model) {
+    @GetMapping("/createProduct")
+    public String createForm(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return new ModelAndView("product/createProductForm");
+        return "product/createProduct";
     }
 
     @PostMapping("/createProduct")
-    public ModelAndView createProduct(Model model,
+    public String createProduct(Model model,
                                       @RequestParam(name = "productName") String productName,
                                       @RequestParam(name = "productPrice") BigDecimal productPrice,
                                       @RequestParam(name = "producerId") Long producerId) {
+
+        Product productAudit = productService.findByName(productName);
+        if (productAudit != null && productAudit.getProducer().getId() == producerId){
+            model.addAttribute("producers", producerService.findAll());
+            model.addAttribute("productDuplicate", "Product with this name and producer already exist!!!\nTry again.");
+            return "product/createProduct";
+        }
 
         productService.createProduct(productName, productPrice, producerId);
 
         model.addAttribute("producers", producerService.findAll());
-
-        return new ModelAndView("product/createProduct");
+        model.addAttribute("productCreate", "product create successful");
+        return "product/createProduct";
     }
 
-    @GetMapping("/updateProductForm")
-    public ModelAndView updateForm(Model model) {
+    @GetMapping("/updateProduct")
+    public String updateForm(Model model) {
 
         model.addAttribute("products", productService.findAll());
         model.addAttribute("producers", producerService.findAll());
 
-        return new ModelAndView("product/updateProductForm");
+        return "product/updateProduct";
     }
 
     @PostMapping("/updateProduct")
-    public ModelAndView updateProduct(Model model,
+    public String updateProduct(Model model,
                                       @RequestParam(name = "productId") Long productId,
                                       @RequestParam(name = "productName") String productName,
                                       @RequestParam(name = "productPrice") BigDecimal productPrice,
                                       @RequestParam(name = "producerId") Long producerId) {
+        Product productAudit = productService.findByName(productName);
+        if (productAudit != null && productAudit.getProducer().getId() == producerId){
+            model.addAttribute("products", productService.findAll());
+            model.addAttribute("producers", producerService.findAll());
+            model.addAttribute("productDuplicate", "Product with this name and producer already exist!!!\nTry again.");
+            return "product/updateProduct";
+        }
+
         productService.updateProduct(productId, productName, productPrice, producerId);
 
         model.addAttribute("products", productService.findAll());
         model.addAttribute("producers", producerService.findAll());
-
-        return new ModelAndView("product/updateProduct");
+        model.addAttribute("productUpdate", "Product update successful");
+        return "product/updateProduct";
     }
 
-    @GetMapping("/deleteProductForm")
-    public ModelAndView deleteForm(Model model) {
+    @GetMapping("/deleteProduct")
+    public String deleteForm(Model model) {
 
         model.addAttribute("products", productService.findAll());
 
-        return new ModelAndView("product/deleteProductForm");
+        return "product/deleteProduct";
     }
 
     @PostMapping("/deleteProduct")
-    public ModelAndView deleteProduct(Model model,
-                                      @RequestParam(name = "productId") Long productId) {
+    public String deleteProduct(Model model,
+                                @RequestParam(name = "productId") Long productId) {
 
         model.addAttribute("products", productService.findAll());
 
         productService.deleteProduct(productId);
-
-        return new ModelAndView("product/deleteProduct");
+        return "redirect:deleteProduct";
     }
 }

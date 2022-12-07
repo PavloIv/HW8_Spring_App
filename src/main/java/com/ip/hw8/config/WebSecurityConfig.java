@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -19,15 +22,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        List<String> sss= new ArrayList<>();
+        sss.addAll(sss);
             http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/user/createUser","/user/updateUser","/user/deleteUser")
+                    .antMatchers("/user/updateUser","/user/deleteUser")
                     .hasRole("ADMIN")
                     .antMatchers("/product/createProduct","/product/updateProduct","/product/deleteProduct")
                     .hasRole("ADMIN")
                     .antMatchers("/producer/createProducer","/producer/updateProducer","/producer/deleteProducer")
                     .hasRole("ADMIN")
-                    .antMatchers("/","/registrationNewUser")
+                    .antMatchers("/user/createUser","/","/registrationNewUser")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
@@ -43,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
+            .userDetailsService(userService)
+            .passwordEncoder(passwordEncoder);
     }
 }

@@ -21,11 +21,20 @@
 
             <label for="producerName"> name: </label><br>
             <input type="text" id="producerName" name="producerName" required><br><br>
+            <div th:if="${producerDuplicate}">
+                <h3>
+                    <div style="color:red" th:text="${producerDuplicate}"></div>
+                </h3>
+            </div>
 
             <button type="submit">Update</button>
         </form>
 
-    <h2>Producer update</h2>
+    <div th:if="${producerUpdate}">
+        <h3>
+            <div type="submit" th:text="${producerUpdate}"></div>
+        </h3>
+    </div>
 
     </body>
 </html>

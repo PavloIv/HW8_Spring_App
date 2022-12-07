@@ -16,6 +16,10 @@ public class ProducerService {
         return producerRepository.findAll();
     }
 
+    public Producer findByName(String name){
+        return producerRepository.findByName(name);
+    }
+
     public void createProducer(String producerName){
         Producer producer = new Producer();
         producer.setName(producerName);

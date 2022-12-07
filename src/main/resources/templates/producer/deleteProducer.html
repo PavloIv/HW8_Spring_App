@@ -22,7 +22,11 @@
             <button type="submit">Delete</button>
         </form>
 
-    <h2>Producer delete</h2>
+    <div th:if="${producerDelete}">
+        <h3>
+            <div type="submit" th:text="${producerDelete}"></div>
+        </h3>
+    </div>
 
     </body>
 </html>

@@ -11,7 +11,13 @@
 
     <form action="/product/createProduct" method="post">
         <label for="productName"> name: </label><br>
-        <input type="text" id="productName" name="productName" required><br><br>
+        <input type="text" id="productName" name="productName" required><br>
+        <div th:if="${productDuplicate}">
+            <h3>
+                <div style="color:red" th:text="${productDuplicate}"></div>
+            </h3>
+        </div>
+
         <label for="productPrice"> price: </label><br>
         <input type="text" id="productPrice" name="productPrice" required><br><br>
 
@@ -27,7 +33,11 @@
         <button type="submit">Create</button>
     </form>
 
-    <h2>Producer add</h2>
+    <div th:if="${productCreate}">
+        <h3>
+            <div type="submit" th:text="${productCreate}"></div>
+        </h3>
+    </div>
 
     </body>
 </html>

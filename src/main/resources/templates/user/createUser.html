@@ -10,30 +10,66 @@
 <div th:replace="navigation :: navbar"></div>
 
 <div th:if="${userDuplicate}">
-    <h2>
-        <div th:text="${userDuplicate}"></div>
-    </h2>
+    <h3>
+        <div style="color:red" th:text="${userDuplicate}"></div>
+    </h3>
 </div>
 <form action="/user/createUser" method="post">
     <label for="email"> email: </label><br>
     <input type="text" id="email" name="email" required><br>
     <div th:if="${emailError}">
-        <h2>
-            <div th:text="${emailError}"></div>
-        </h2>
+        <h5>
+            <div style="color:red" th:text="${emailError}"></div>
+        </h5>
     </div>
     <br>
-    <label for="password"> password: </label><br>
-    <input type="text" id="password" name="password" required><br><br>
-    <label for="firstName"> first name: </label><br>
-    <input type="text" id="firstName" name="firstName" required><br><br>
-    <label for="lastName"> last name: </label><br>
-    <input type="text" id="lastName" name="lastName" required><br><br>
 
-    <button type="submit">Create</button>
+    <label for="password"> password: </label><br>
+    <input type="text" id="password" name="password" required><br>
+    <div th:if="${passwordError}">
+        <h5>
+            <div style="color:red" th:text="${passwordError}"></div>
+        </h5>
+    </div>
+    <br>
+
+    <label for="password2"> password2: </label><br>
+    <input type="text" id="password2" name="password2" required><br>
+    <div th:if="${passwordDifError}">
+        <h5>
+            <div style="color:red" th:text="${passwordDifError}"></div>
+        </h5>
+    </div>
+    <br>
+
+    <label for="firstName"> first name: </label><br>
+    <input type="text" id="firstName" name="firstName" required><br>
+    <div th:if="${firstNameError}">
+        <h5>
+            <div style="color:red" th:text="${firstNameError}"></div>
+        </h5>
+    </div>
+    <br>
+
+    <label for="lastName"> last name: </label><br>
+    <input type="text" id="lastName" name="lastName" required><br>
+    <div th:if="${lastNameError}">
+    <h5>
+        <div style="color:red" th:text="${lastNameError}"></div>
+    </h5>
+</div>
+    <br>
+
+    <button type="submit">Create</button><br><br>
 </form>
 
-<h2>User add</h2>
+<button href="/login"> Login </button>
+
+<div th:if="${userCreate}">
+    <h3>
+        <div type="submit" th:text="${userCreate}"></div>
+    </h3>
+</div>
 
 </body>
 </html>

@@ -23,7 +23,11 @@
             <button type="submit">Delete</button>
         </form>
 
-    <h2>Producer delete</h2>
+    <div th:if="${productDelete}">
+        <h3>
+            <div type="submit" th:text="${productDelete}"></div>
+        </h3>
+    </div>
 
     </body>
 </html>
