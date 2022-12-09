@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @SpringBootApplication
 public class Hw8Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Hw8Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Hw8Application.class, args);
+    }
 
 }

@@ -23,7 +23,6 @@ public class Product {
     private String name;
     @Column(name = "price")
     private BigDecimal price;
-
     @ManyToOne
     @JoinColumn(name = "producer_id")
     private Producer producer;

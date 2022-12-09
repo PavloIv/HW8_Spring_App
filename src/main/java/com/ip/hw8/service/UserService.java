@@ -25,29 +25,27 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmailFetchRole(username);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public void createUser(User user){
+    public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         userRepository.save(user);
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 

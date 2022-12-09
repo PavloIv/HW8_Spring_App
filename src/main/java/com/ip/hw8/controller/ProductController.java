@@ -35,69 +35,55 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     public String createProduct(Model model,
-                                      @RequestParam(name = "productName") String productName,
-                                      @RequestParam(name = "productPrice") BigDecimal productPrice,
-                                      @RequestParam(name = "producerId") Long producerId) {
-
+                                @RequestParam(name = "productName") String productName,
+                                @RequestParam(name = "productPrice") BigDecimal productPrice,
+                                @RequestParam(name = "producerId") Long producerId) {
+        model.addAttribute("producers", producerService.findAll());
         Product productAudit = productService.findByName(productName);
-        if (productAudit != null && productAudit.getProducer().getId() == producerId){
-            model.addAttribute("producers", producerService.findAll());
+        if (productAudit != null && productAudit.getProducer().getId() == producerId) {
             model.addAttribute("productDuplicate", "Product with this name and producer already exist!!!\nTry again.");
             return "product/createProduct";
         }
-
         productService.createProduct(productName, productPrice, producerId);
-
-        model.addAttribute("producers", producerService.findAll());
         model.addAttribute("productCreate", "product create successful");
         return "product/createProduct";
     }
 
     @GetMapping("/updateProduct")
     public String updateForm(Model model) {
-
         model.addAttribute("products", productService.findAll());
         model.addAttribute("producers", producerService.findAll());
-
         return "product/updateProduct";
     }
 
     @PostMapping("/updateProduct")
     public String updateProduct(Model model,
-                                      @RequestParam(name = "productId") Long productId,
-                                      @RequestParam(name = "productName") String productName,
-                                      @RequestParam(name = "productPrice") BigDecimal productPrice,
-                                      @RequestParam(name = "producerId") Long producerId) {
+                                @RequestParam(name = "productId") Long productId,
+                                @RequestParam(name = "productName") String productName,
+                                @RequestParam(name = "productPrice") BigDecimal productPrice,
+                                @RequestParam(name = "producerId") Long producerId) {
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("producers", producerService.findAll());
         Product productAudit = productService.findByName(productName);
-        if (productAudit != null && productAudit.getProducer().getId() == producerId){
-            model.addAttribute("products", productService.findAll());
-            model.addAttribute("producers", producerService.findAll());
+        if (productAudit != null && productAudit.getProducer().getId() == producerId) {
             model.addAttribute("productDuplicate", "Product with this name and producer already exist!!!\nTry again.");
             return "product/updateProduct";
         }
-
         productService.updateProduct(productId, productName, productPrice, producerId);
-
-        model.addAttribute("products", productService.findAll());
-        model.addAttribute("producers", producerService.findAll());
         model.addAttribute("productUpdate", "Product update successful");
         return "product/updateProduct";
     }
 
     @GetMapping("/deleteProduct")
     public String deleteForm(Model model) {
-
         model.addAttribute("products", productService.findAll());
-
         return "product/deleteProduct";
     }
 
     @PostMapping("/deleteProduct")
     public String deleteProduct(Model model,
                                 @RequestParam(name = "productId") Long productId) {
-
         model.addAttribute("products", productService.findAll());
-
         productService.deleteProduct(productId);
         return "redirect:deleteProduct";
     }

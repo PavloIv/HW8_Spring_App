@@ -16,14 +16,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProducerRepository producerRepository;
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
-    public Product findByName(String productName){
+
+    public Product findByName(String productName) {
         return productRepository.findByName(productName);
     }
 
-    public void createProduct(String productName, BigDecimal productPrice, Long producerId){
+    public void createProduct(String productName, BigDecimal productPrice, Long producerId) {
         Producer producer;
         producer = producerRepository.getReferenceById(producerId);
         Product product = new Product();
@@ -34,7 +35,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void updateProduct(Long productId,String productName, BigDecimal productPrice, Long producerId){
+    public void updateProduct(Long productId, String productName, BigDecimal productPrice, Long producerId) {
         Producer producer;
         producer = producerRepository.getReferenceById(producerId);
 
@@ -47,7 +48,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void deleteProduct(Long productId){
+    public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
 

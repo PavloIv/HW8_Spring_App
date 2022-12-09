@@ -22,7 +22,6 @@ public class Producer {
     private Long id;
     @Column(name = "name")
     private String name;
-
     @OneToMany(mappedBy = "producer")
     @ToString.Exclude
     List<Product> products = new ArrayList<>();

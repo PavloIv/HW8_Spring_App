@@ -22,33 +22,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        List<String> sss= new ArrayList<>();
+        List<String> sss = new ArrayList<>();
         sss.addAll(sss);
-            http.csrf().disable()
+        http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/user/updateUser","/user/deleteUser")
-                    .hasRole("ADMIN")
-                    .antMatchers("/product/createProduct","/product/updateProduct","/product/deleteProduct")
-                    .hasRole("ADMIN")
-                    .antMatchers("/producer/createProducer","/producer/updateProducer","/producer/deleteProducer")
-                    .hasRole("ADMIN")
-                    .antMatchers("/user/createUser","/","/registrationNewUser")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
+                .antMatchers("/user/updateUser", "/user/deleteUser")
+                .hasRole("ADMIN")
+                .antMatchers("/product/createProduct", "/product/updateProduct", "/product/deleteProduct")
+                .hasRole("ADMIN")
+                .antMatchers("/producer/createProducer", "/producer/updateProducer", "/producer/deleteProducer")
+                .hasRole("ADMIN")
+                .antMatchers("/user/createUser", "/", "/registrationNewUser")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .userDetailsService(userService)
-            .passwordEncoder(passwordEncoder);
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
     }
 }
