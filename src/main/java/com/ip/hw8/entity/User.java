@@ -1,6 +1,7 @@
 package com.ip.hw8.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ip.hw8.anotation.Duplicate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     @Column(name = "email")
     @Email(message = "email is not correct")
     @NotBlank(message = "email can not be empty")
+    @Duplicate
     private String email;
     @Column(name = "password")
     @JsonIgnore

@@ -9,7 +9,7 @@
 
 <div th:replace="navigation :: navbar"></div>
 
-<div th:if="${userDuplicate}">
+<div th:if="${emailError}">
     <h3>
         <div style="color:red" th:text="${userDuplicate}"></div>
     </h3>

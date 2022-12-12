@@ -6,55 +6,52 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <div th:replace="navigation :: navbar"></div>
+    <form action="/user/updateUser" method="post">
+        <label for="id"> id: </label><br>
+        <select input class="form-select" id="id" name="id" required aria-label="select example">
+            <option value="">id</option>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.id}"> Id </span></td>
+                <option th:text="${user.id}">Id</option>
+            </tr>><br>
+        </select><br><br>
 
-<div th:replace="navigation :: navbar"></div>
+    <!--    <div th:if="${userDuplicate}">-->
+    <!--        <h3>-->
+    <!--            <div style="color:red" th:text="${userDuplicate}"></div>-->
+    <!--        </h3>-->
+    <!--    </div>-->
+        <label for="email"> email: </label><br>
+        <input type="text" id="email" name="email" required><br>
+        <div th:if="${emailError}">
+            <h5>
+                <div style="color:red" th:text="${emailError}"></div>
+            </h5>
+        </div>
+        <br>
 
-<form action="/user/updateUser" method="post">
-    <label for="id"> id: </label><br>
-    <select input class="form-select" id="id" name="id" required aria-label="select example">
-        <option value="">id</option>
-        <tr th:each="user : ${users}">
-            <td><span th:text="${user.id}"> Id </span></td>
-            <option th:text="${user.id}">Id</option>
-        </tr>><br>
-    </select><br><br>
+        <label for="password"> password: </label><br>
+        <input type="text" id="password" name="password" required><br>
+        <div th:if="${passwordError}">
+            <h5>
+                <div style="color:red" th:text="${passwordError}"></div>
+            </h5>
+        </div>
+        <br>
 
-    <div th:if="${userDuplicate}">
+        <label for="firstName"> first name: </label><br>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName"> last name: </label><br>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <div th:if="${userUpdate}">
         <h3>
-            <div style="color:red" th:text="${userDuplicate}"></div>
+            <div th:text="${userUpdate}"></div>
         </h3>
     </div>
-    <label for="email"> email: </label><br>
-    <input type="text" id="email" name="email" required><br>
-    <div th:if="${emailError}">
-        <h5>
-            <div style="color:red" th:text="${emailError}"></div>
-        </h5>
-    </div>
-    <br>
-
-    <label for="password"> password: </label><br>
-    <input type="text" id="password" name="password" required><br>
-    <div th:if="${passwordError}">
-        <h5>
-            <div style="color:red" th:text="${passwordError}"></div>
-        </h5>
-    </div>
-    <br>
-
-    <label for="firstName"> first name: </label><br>
-    <input type="text" id="firstName" name="firstName" required><br><br>
-    <label for="lastName"> last name: </label><br>
-    <input type="text" id="lastName" name="lastName" required><br><br>
-
-    <button type="submit">Update</button>
-</form>
-
-<div th:if="${userUpdate}">
-    <h3>
-        <div th:text="${userUpdate}"></div>
-    </h3>
-</div>
-
 </body>
 </html>
