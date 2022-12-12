@@ -17,13 +17,13 @@
             </tr>><br>
         </select><br><br>
 
-    <!--    <div th:if="${userDuplicate}">-->
-    <!--        <h3>-->
-    <!--            <div style="color:red" th:text="${userDuplicate}"></div>-->
-    <!--        </h3>-->
-    <!--    </div>-->
         <label for="email"> email: </label><br>
         <input type="text" id="email" name="email" required><br>
+        <div th:if="${userError}">
+            <h5>
+                <div style="color:red" th:text="${userError}"></div>
+            </h5>
+        </div>
         <div th:if="${emailError}">
             <h5>
                 <div style="color:red" th:text="${emailError}"></div>

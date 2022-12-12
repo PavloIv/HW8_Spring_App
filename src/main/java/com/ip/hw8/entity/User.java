@@ -22,6 +22,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@Duplicate(id = "id", email = "email")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,6 @@ public class User implements UserDetails {
     @Column(name = "email")
     @Email(message = "email is not correct")
     @NotBlank(message = "email can not be empty")
-    @Duplicate
     private String email;
     @Column(name = "password")
     @JsonIgnore
