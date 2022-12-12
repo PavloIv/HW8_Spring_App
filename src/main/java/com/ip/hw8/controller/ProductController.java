@@ -65,8 +65,11 @@ public class ProductController {
         model.addAttribute("products", productService.findAll());
         model.addAttribute("producers", producerService.findAll());
         Product productAudit = productService.findByName(productName);
-        if (productAudit != null && productAudit.getProducer().getId() == producerId) {
-            model.addAttribute("productDuplicate", "Product with this name and producer already exist!!!\nTry again.");
+        if (productAudit != null &&
+                productAudit.getProducer().getId() == producerId &&
+                productAudit.getId() != productId) {
+            model.addAttribute("productDuplicate",
+                    "Product with this name and producer already exist!!!\nTry again.");
             return "product/updateProduct";
         }
         productService.updateProduct(productId, productName, productPrice, producerId);

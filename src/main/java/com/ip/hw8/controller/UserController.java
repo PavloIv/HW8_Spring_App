@@ -59,11 +59,6 @@ public class UserController {
                              BindingResult bindingResult,
                              Model model) {
         model.addAttribute("users", userService.findAll());
-//        User userAudit = userService.findByEmail(user.getEmail());
-//        if (userAudit != null && userAudit.getId() != user.getId()) {
-//            model.addAttribute("userDuplicate", "User with this name already exist!!!\nTry again.");
-//            return "user/updateUser";
-//        }
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);

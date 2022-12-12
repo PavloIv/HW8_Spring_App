@@ -12,9 +12,9 @@
         <form action="/producer/createProducer" method="post">
             <label for="producerName"> name: </label><br>
             <div th:if="${producerDuplicate}">
-                <h3>
+                <h5>
                     <div style="color:red" th:text="${producerDuplicate}"></div>
-                </h3>
+                </h5>
             </div>
 
             <input type="text" id="producerName" name="producerName" required><br><br>

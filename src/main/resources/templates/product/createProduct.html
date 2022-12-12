@@ -13,10 +13,10 @@
         <label for="productName"> name: </label><br>
         <input type="text" id="productName" name="productName" required><br>
         <div th:if="${productDuplicate}">
-            <h3>
+            <h5>
                 <div style="color:red" th:text="${productDuplicate}"></div>
-            </h3>
-        </div>
+            </h5>
+        </div><br>
 
         <label for="productPrice"> price: </label><br>
         <input type="text" id="productPrice" name="productPrice" required><br><br>
